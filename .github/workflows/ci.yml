@@ -1,0 +1,26 @@
+name: Docker CI
+on:
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+        env: 
+          GITHUB_USER: reto911
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          docker login ghcr.io --username $GITHUB_USER --password $GITHUB_TOKEN
+      - name: Docker Build
+        run: |
+          docker build . --file Dockerfile --tag ghcr.io/reto911/escape_speed:latest
+      - name: Docker Push
+        run: |
+          docker push ghcr.io/reto911/escape_speed:latest
