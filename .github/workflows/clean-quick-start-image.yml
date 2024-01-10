@@ -1,0 +1,22 @@
+name: Clean Quick Start Image
+on:
+  workflow_dispatch: 
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Requests
+        run: |
+          sudo pip3 install requests
+      - name: Run Cleanup Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 ./.github/scripts/clean.py $GITHUB_TOKEN
+
