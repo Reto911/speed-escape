@@ -18,5 +18,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo $GITHUB_TOKEN
           python3 ./.github/scripts/clean.py $GITHUB_TOKEN
 
